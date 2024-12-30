@@ -23,7 +23,11 @@ app.use(express.json());
 
 // MongoDB connection
 mongoose
-  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(process.env.MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true,
+    maxPoolSize: 10, // Use maxPoolSize instead of poolSize
+    serverSelectionTimeoutMS: 5000,
+    socketTimeoutMS: 45000,
+   })
   .then(async () => {
     console.log('MongoDB connected successfully');
 
