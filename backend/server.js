@@ -9,6 +9,7 @@ const orderRoutes = require('./routes/orderRoutes'); // Adjust the path as neede
 const bankAccountRoutes = require('./routes/bankAccountRoutes'); // Add bank account routes
 const adminRoutes = require('./routes/adminRoutes');
 const withdrawalRoutes = require('./routes/withdrawal');
+const Currency = require('./models/currencySchema');
 
 const app = express();
 
