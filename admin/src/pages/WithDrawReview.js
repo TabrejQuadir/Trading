@@ -18,7 +18,7 @@ const WithDrawReview = () => {
         // Check user role and call the appropriate API
         if (user.role === "superadmin") {
           response = await axios.get(
-            "http://localhost:5000/api/withdrawals/superAdmin/all",
+            "https://trading-backendd.onrender.com/api/withdrawals/superAdmin/all",
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -27,7 +27,7 @@ const WithDrawReview = () => {
           );
         } else if (user.role === "subadmin") {
           response = await axios.get(
-            `http://localhost:5000/api/withdrawals/subadmin/${user.userId}`,
+            `https://trading-backendd.onrender.com/api/withdrawals/subadmin/${user.userId}`,
             {
               headers: {
                 Authorization: `Bearer ${localStorage.getItem("token")}`,
