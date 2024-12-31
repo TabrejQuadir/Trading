@@ -15,7 +15,7 @@ const app = express();
 
 // CORS setup
 app.use(cors({
-  origin: ['http://localhost:3000', 'http://localhost:3001', 'http://localhost:3002'], // Allow both client and admin origins
+  origin: ['http://localhost:3000', 'http://localhost:3001', 'https://gaming-dev.onrender.com'], // Allow both client and admin origins
   methods: ['GET', 'POST', 'PUT', 'DELETE'],
   credentials: true,
 }));
