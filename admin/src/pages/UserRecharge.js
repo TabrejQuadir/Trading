@@ -79,7 +79,10 @@ const UserRecharge = () => {
       // Fetch updated user data
       await getUsers();
     } catch (err) {
-      console.error(`Error ${action === "add" ? "adding" : "deducting"} balance:`, err);
+      console.error(
+        `Error ${action === "add" ? "adding" : "deducting"} balance:`,
+        err
+      );
       setError(`Failed to ${action === "add" ? "add" : "deduct"} balance.`);
     }
   };
@@ -113,7 +116,7 @@ const UserRecharge = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10">
+    <div className="min-h-screen bg-gray-100 flex flex-col items-center py-10 px-4 sm:px-6 lg:px-8">
       <div className="w-full max-w-4xl bg-white shadow-lg rounded-lg p-6">
         <h1 className="text-2xl font-bold text-gray-800 text-center mb-6">
           User Recharge
@@ -141,39 +144,63 @@ const UserRecharge = () => {
             {filteredUsers.map((refUser) => (
               <li
                 key={refUser._id}
-                className="flex flex-col sm:flex-row items-center justify-between bg-gray-100 rounded-md p-4 shadow-md hover:shadow-lg transition"
+                className="flex flex-col sm:flex-row items-center justify-between bg-gray-100 rounded-md p-4 shadow-md hover:shadow-lg transition mb-4"
               >
                 <div className="sm:w-2/5">
                   <p className="text-gray-800 font-semibold">{refUser.email}</p>
                   <p className="text-gray-600">Balance: {refUser.balance}</p>
-                  <p className="text-gray-600">Frozen: {refUser.isBalanceFrozen ? "Yes" : "No"}</p>
+                  <p className="text-gray-600">
+                    Frozen: {refUser.isBalanceFrozen ? "Yes" : "No"}
+                  </p>
                 </div>
-                <div className="flex items-center sm:w-3/5 space-x-2 mt-4 sm:mt-0">
-                  <input
-                    type="number"
-                    placeholder="Amount"
-                    value={amounts[refUser._id] || ""}
-                    onChange={(e) => handleAmountChange(refUser._id, e.target.value)}
-                    className="w-24 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
-                  />
-                  <button
-                    onClick={() => handleBalanceUpdate(refUser._id, "add")}
-                    className="px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow hover:bg-green-600 transition"
-                  >
-                    Add Balance
-                  </button>
-                  <button
-                    onClick={() => handleBalanceUpdate(refUser._id, "deduct")}
-                    className="px-4 py-2 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition"
-                  >
-                    Deduct Balance
-                  </button>
-                  <button
-                    onClick={() => handleFrozenStatusUpdate(refUser._id, !refUser.isBalanceFrozen)}
-                    className={`px-4 py-2 ${refUser.isBalanceFrozen ? "bg-blue-500" : "bg-yellow-500"} text-white font-semibold rounded-md shadow hover:${refUser.isBalanceFrozen ? "bg-blue-600" : "bg-yellow-600"} transition`}
-                  >
-                    {refUser.isBalanceFrozen ? "Unfreeze" : "Freeze"}
-                  </button>
+                <div className="w-full sm:w-3/5 space-y-4 sm:space-y-0">
+                  {/* Amount Input Field */}
+                  <div className="w-full sm:w-auto mb-4">
+                    <input
+                      type="number"
+                      placeholder="Amount"
+                      value={amounts[refUser._id] || ""}
+                      onChange={(e) =>
+                        handleAmountChange(refUser._id, e.target.value)
+                      }
+                      className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-300"
+                    />
+                  </div>
+                  
+                  {/* Buttons */}
+                  <div className="w-full flex flex-col sm:flex-row sm:space-x-4 space-y-4 sm:space-y-2">
+                    <button
+                      onClick={() => handleBalanceUpdate(refUser._id, "add")}
+                      className="w-full sm:w-auto px-4 py-2 bg-green-500 text-white font-semibold rounded-md shadow hover:bg-green-600 transition"
+                    >
+                      Add Balance
+                    </button>
+                    <button
+                      onClick={() => handleBalanceUpdate(refUser._id, "deduct")}
+                      className="w-full sm:w-auto px-4 py-2 bg-red-500 text-white font-semibold rounded-md shadow hover:bg-red-600 transition"
+                    >
+                      Deduct Balance
+                    </button>
+                    <button
+                      onClick={() =>
+                        handleFrozenStatusUpdate(
+                          refUser._id,
+                          !refUser.isBalanceFrozen
+                        )
+                      }
+                      className={`w-full sm:w-auto px-4 py-2 ${
+                        refUser.isBalanceFrozen
+                          ? "bg-blue-500"
+                          : "bg-yellow-500"
+                      } text-white font-semibold rounded-md shadow hover:${
+                        refUser.isBalanceFrozen
+                          ? "bg-blue-600"
+                          : "bg-yellow-600"
+                      } transition`}
+                    >
+                      {refUser.isBalanceFrozen ? "Unfreeze" : "Freeze"}
+                    </button>
+                  </div>
                 </div>
               </li>
             ))}

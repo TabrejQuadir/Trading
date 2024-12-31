@@ -31,7 +31,7 @@ const WithdrawalRecord = () => {
   }, [user._id]); // Dependency on user ID
 
   return (
-    <div className="container mx-auto p-4 sm:p-8">
+    <div className="container mx-auto p-4 sm:p-8 mb-16">
       <h1 className="text-3xl font-bold mb-6 text-center">
         Withdrawal Records
       </h1>
