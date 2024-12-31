@@ -8,7 +8,7 @@ export const CurrencyProvider = ({ children }) => {
   useEffect(() => {
     const fetchCurrencies = async () => {
       try {
-        const response = await fetch('http://localhost:5000/api/currencies');
+        const response = await fetch('https://trading-backendd.onrender.com/api/currencies');
         if (!response.ok) {
           throw new Error(`HTTP error! Status: ${response.status}`);
         }

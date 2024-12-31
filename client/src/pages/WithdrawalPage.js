@@ -29,7 +29,7 @@ const WithdrawalPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/withdrawals",
+        "https://trading-backendd.onrender.com/api/withdrawals",
         {
           accountId: selectedAccount,
           currency,

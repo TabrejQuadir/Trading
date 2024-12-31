@@ -12,7 +12,7 @@ const WithdrawalRecord = () => {
     const fetchWithdrawalRecords = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:5000/api/withdrawals?userId=${user._id}`,
+          `https://trading-backendd.onrender.com/api/withdrawals?userId=${user._id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`, // Ensure the token is included

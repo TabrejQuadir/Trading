@@ -21,7 +21,7 @@ export const BankAccountProvider = ({ children }) => {
       setLoading(true);
       const token = localStorage.getItem("token");
       const response = await axios.get(
-        "http://localhost:5000/api/bank-accounts",
+        "https://trading-backendd.onrender.com/api/bank-accounts",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -48,7 +48,7 @@ export const BankAccountProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
       const response = await axios.post(
-        "http://localhost:5000/api/bank-accounts",
+        "https://trading-backendd.onrender.com/api/bank-accounts",
         bankDetails,
         {
           headers: {
@@ -66,7 +66,7 @@ export const BankAccountProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:5000/api/bank-accounts/${accounts[index]._id}`,
+        `https://trading-backendd.onrender.com/api/bank-accounts/${accounts[index]._id}`,
         bankDetails,
         {
           headers: {
@@ -84,7 +84,7 @@ export const BankAccountProvider = ({ children }) => {
     try {
       const token = localStorage.getItem("token");
       await axios.delete(
-        `http://localhost:5000/api/bank-accounts/${accounts[index]._id}`,
+        `https://trading-backendd.onrender.com/api/bank-accounts/${accounts[index]._id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -106,7 +106,7 @@ export const BankAccountProvider = ({ children }) => {
       }
 
       const response = await axios.put(
-        `http://localhost:5000/api/bank-accounts/${accounts[index]._id}/set-default`,
+        `https://trading-backendd.onrender.com/api/bank-accounts/${accounts[index]._id}/set-default`,
         {},
         {
           headers: {

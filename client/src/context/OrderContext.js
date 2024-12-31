@@ -6,7 +6,7 @@ const OrderContext = createContext();
 
 export const OrderProvider = ({ children }) => {
   const [userOrders, setUserOrders] = useState([]);
-  const server = "http://localhost:5000";
+  const server = "https://trading-backendd.onrender.com";
   const { updateUserBalance } = useContext(AuthContext);
 
   const getAxiosConfig = () => {

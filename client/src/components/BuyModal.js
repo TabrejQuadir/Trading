@@ -16,7 +16,7 @@ const BuyModal = ({
   const [amount, setAmount] = useState(0);
   const [totalIncome, setTotalIncome] = useState(0);
   const [isClosing, setIsClosing] = useState(false);
-  const server = "http://localhost:5000";
+  const server = "https://trading-backendd.onrender.com";
 
   console.log(user, "user");
 

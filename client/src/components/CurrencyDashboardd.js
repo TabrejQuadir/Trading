@@ -10,7 +10,7 @@ function CurrencyDashboard() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const socket = io('http://localhost:5000');
+    const socket = io('https://trading-backendd.onrender.com');
 
     socket.on('connect', () => {
       console.log('Connected to server');
