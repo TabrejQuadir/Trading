@@ -31,7 +31,7 @@ export const AuthProvider = ({ children }) => {
   const loginAdmin = async (adminData) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/login",
+        "https://trading-backendd.onrender.com/api/admin/login",
         adminData
       );
       localStorage.setItem("token", response.data.token);
@@ -49,7 +49,7 @@ export const AuthProvider = ({ children }) => {
       const token = localStorage.getItem("token"); // Retrieve the token from local storage
 
       const response = await axios.post(
-        "http://localhost:5000/api/admin/registerSubAdmin",
+        "https://trading-backendd.onrender.com/api/admin/registerSubAdmin",
         subAdminData,
         {
           headers: {
@@ -69,7 +69,7 @@ export const AuthProvider = ({ children }) => {
   const registerSuperAdmin = async (adminData) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/admin/registerSuperAdmin",
+        "https://trading-backendd.onrender.com/api/admin/registerSuperAdmin",
         adminData
       );
       setAdminRegistered(true);
@@ -86,7 +86,7 @@ export const AuthProvider = ({ children }) => {
     try {
       // Make the API call
       const response = await axios.get(
-        "http://localhost:5000/api/admin/users",
+        "https://trading-backendd.onrender.com/api/admin/users",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -127,7 +127,7 @@ export const AuthProvider = ({ children }) => {
     console.log("Fetching all users..."); // Log the call
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/all-users",
+        "https://trading-backendd.onrender.com/api/admin/all-users",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }
@@ -150,7 +150,7 @@ export const AuthProvider = ({ children }) => {
   const fetchSubAdmins = async () => {
     try {
       const response = await axios.get(
-        "http://localhost:5000/api/admin/subadmins",
+        "https://trading-backendd.onrender.com/api/admin/subadmins",
         {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         }

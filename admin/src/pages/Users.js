@@ -39,7 +39,7 @@ const Users = () => {
     try {
       const newStatus = selectedStatus[userId];
       const response = await fetch(
-        `http://localhost:5000/api/auth/isGonnaWin`,
+        `https://trading-backendd.onrender.com/api/auth/isGonnaWin`,
         {
           method: "POST",
           headers: {

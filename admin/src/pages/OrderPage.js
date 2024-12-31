@@ -15,10 +15,10 @@ const OrderPage = () => {
         const response =
           user.role === "superadmin"
             ? await fetch(
-                "http://localhost:5000/api/orders/superadmin/allOrders"
+                "https://trading-backendd.onrender.com/api/orders/superadmin/allOrders"
               )
             : await fetch(
-                `http://localhost:5000/api/orders/subadmin/${user.userId}`
+                `https://trading-backendd.onrender.com/api/orders/subadmin/${user.userId}`
               );
 
         const data = await response.json();

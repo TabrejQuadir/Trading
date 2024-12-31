@@ -56,8 +56,8 @@ const UserRecharge = () => {
     try {
       const endpoint =
         action === "add"
-          ? "http://localhost:5000/api/auth/add-balance"
-          : "http://localhost:5000/api/auth/deduct-balance";
+          ? "https://trading-backendd.onrender.com/api/auth/add-balance"
+          : "https://trading-backendd.onrender.com/api/auth/deduct-balance";
 
       const response = await axios.post(
         endpoint,
@@ -95,7 +95,7 @@ const UserRecharge = () => {
   const handleFrozenStatusUpdate = async (userId, isFrozen) => {
     try {
       const response = await axios.post(
-        "http://localhost:5000/api/auth/update-balance-frozen",
+        "https://trading-backendd.onrender.com/api/auth/update-balance-frozen",
         { userId, isFrozen },
         {
           headers: {

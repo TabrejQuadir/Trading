@@ -38,8 +38,8 @@ const ReputationPoints = () => {
     try {
       const endpoint =
         action === "add"
-          ? "http://localhost:5000/api/auth/add-reputation"
-          : "http://localhost:5000/api/auth/deduct-reputation";
+          ? "https://trading-backendd.onrender.com/api/auth/add-reputation"
+          : "https://trading-backendd.onrender.com/api/auth/deduct-reputation";
 
       const response = await axios.post(
         endpoint,

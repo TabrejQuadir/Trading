@@ -60,7 +60,7 @@ const WithDrawReview = () => {
   const handleUpdateStatus = async (status) => {
     try {
       const response = await axios.post(
-        `http://localhost:5000/api/withdrawals/subadmin/${user.userId}/update-status`,
+        `https://trading-backendd.onrender.com/api/withdrawals/subadmin/${user.userId}/update-status`,
         {
           requestId: selectedRequest._id,
           status: status,
