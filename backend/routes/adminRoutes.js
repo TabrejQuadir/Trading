@@ -16,7 +16,7 @@ router.post('/registerSubAdmin', adminAuth, registerSubAdmin);
 router.get('/subadmins', adminAuth, getAllSubAdmins);
 
 // Route to delete a specific sub-admin by ID - only accessible by super admin
-router.delete('/subadmins/:id', adminAuth, deleteSubAdminController);
+router.delete('/subadmins/:id', adminAuth, deleteSubAdmin);
 
 // Route for sub-admin to get users registered through their invitation code
 router.get('/users', adminAuth, getUsersBySubAdmin);  // Only accessible by sub-admin
