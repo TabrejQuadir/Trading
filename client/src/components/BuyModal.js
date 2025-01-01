@@ -162,14 +162,16 @@ const BuyModal = ({
               placeholder="Enter amount to trade"
             />
           </div>
-        </div>
 
-        <button
+          <button
           onClick={handleConfirmOrder}
-          className="w-[98%] py-4 px-8 mb-2 rounded-lg font-semibold bg-black text-white ml-4 transition"
+          className="w-full py-4 mb-2 rounded-lg font-semibold bg-black text-white transition"
         >
           Confirm Order
         </button>
+        </div>
+
+        
       </div>
     </div>
   );
