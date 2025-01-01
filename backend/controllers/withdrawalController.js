@@ -156,17 +156,29 @@ const updateWithdrawalRequestsBySubAdmin = async (req, res) => {
     withdrawalRequest.status = status; // Update the status
     await withdrawalRequest.save(); // Save the updated request
 
-    res
-      .status(200)
-      .json({
-        message: "Withdrawal request status updated successfully.",
-        withdrawalRequest,
-      });
+    // Format withdrawal request to ensure consistent structure
+    const formattedRequest = {
+      ...withdrawalRequest.toObject(),
+      userId: user
+        ? {
+            _id: user._id,
+            email: user.email,
+            balance: user.balance,
+            country: user.country,
+          }
+        : {},
+    };
+
+    res.status(200).json({
+      message: "Withdrawal request status updated successfully.",
+      withdrawalRequest: formattedRequest,
+    });
   } catch (error) {
     console.error("Error updating withdrawal request:", error);
     res.status(500).json({ message: "Server error." });
   }
 };
+
 
 
 module.exports = {
