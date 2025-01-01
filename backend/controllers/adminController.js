@@ -145,6 +145,48 @@ exports.getAllSubAdmins = async (req, res) => {
   }
 };
 
+
+// Delete a sub-admin
+exports.deleteSubAdmin = async (req, res) => {
+  try {
+    // Check if the requester is a super admin
+    if (req.role !== "superadmin") {
+      return res.status(403).json({
+        success: false,
+        message: "Access denied. Only super admins can delete sub-admins.",
+      });
+    }
+
+    // Get the sub-admin ID from the request parameters
+    const subAdminId = req.params.id;
+
+    // Check if the sub-admin exists
+    const subAdmin = await Admin.findOne({ _id: subAdminId, role: "subadmin" });
+    if (!subAdmin) {
+      return res.status(404).json({
+        success: false,
+        message: "Sub-admin not found.",
+      });
+    }
+
+    // Delete the sub-admin
+    await Admin.deleteOne({ _id: subAdminId });
+
+    return res.status(200).json({
+      success: true,
+      message: "Sub-admin deleted successfully.",
+    });
+  } catch (error) {
+    console.error("Error deleting sub-admin:", error.message);
+    return res.status(500).json({
+      success: false,
+      message: "An error occurred while deleting the sub-admin.",
+      error: error.message,
+    });
+  }
+};
+
+
 // Login Admin (for both superadmins and subadmins)
 exports.loginAdmin = async (req, res) => {
   try {

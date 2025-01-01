@@ -134,7 +134,25 @@ const updateWithdrawalRequestsBySubAdmin = async (req, res) => {
       return res.status(404).json({ message: "Withdrawal request not found." });
     }
 
-    // Step 2: Update the status of the withdrawal request
+    // Step 2: Fetch the user associated with the withdrawal request
+    const user = await User.findById(withdrawalRequest.userId);
+    if (!user) {
+      return res.status(404).json({ message: "User associated with the request not found." });
+    }
+
+    // Step 3: If the request is approved, deduct the balance
+    if (status === "approved") {
+      const withdrawalAmount = withdrawalRequest.amount;
+      
+      if (user.balance < withdrawalAmount) {
+        return res.status(400).json({ message: "Insufficient balance for withdrawal." });
+      }
+
+      user.balance -= withdrawalAmount; // Deduct the balance
+      await user.save(); // Save the updated user balance
+    }
+
+    // Step 4: Update the status of the withdrawal request
     withdrawalRequest.status = status; // Update the status
     await withdrawalRequest.save(); // Save the updated request
 
@@ -149,6 +167,7 @@ const updateWithdrawalRequestsBySubAdmin = async (req, res) => {
     res.status(500).json({ message: "Server error." });
   }
 };
+
 
 module.exports = {
   createWithdrawalRequest,

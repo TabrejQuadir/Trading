@@ -162,6 +162,22 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const deleteSubAdmin = async (subAdminId) => {
+    try {
+      const response = await axios.delete(
+        `https://trading-backendd.onrender.com/api/admin/subadmins/${subAdminId}`,
+        {
+          headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
+        }
+      );
+      return response.data; // Return the success message or response data
+    } catch (error) {
+      console.error("Error deleting sub-admin:", error);
+      throw error; // Propagate the error
+    }
+  };
+  
+
   // Logout function
   const logout = () => {
     localStorage.removeItem("token"); // Remove token from local storage
@@ -186,6 +202,7 @@ export const AuthProvider = ({ children }) => {
         fetchSubAdmins,
         fetchAllUsers,
         logout, // Add logout to context
+        deleteSubAdmin
       }}
     >
       {children}

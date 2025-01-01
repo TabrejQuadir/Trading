@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
-import { FaEnvelope, FaUserAlt, FaRegClock, FaCogs, FaSearch } from 'react-icons/fa';
+import { FaEnvelope, FaUserAlt, FaRegClock, FaCogs, FaSearch, FaTrash } from 'react-icons/fa';
 
 const SubAdmin = () => {
   const [subAdmins, setSubAdmins] = useState([]);
   const [filteredSubAdmins, setFilteredSubAdmins] = useState([]);
-  const { fetchSubAdmins, user } = useAuth();
+  const { fetchSubAdmins, deleteSubAdmin, user } = useAuth();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [searchTerm, setSearchTerm] = useState('');
@@ -14,9 +14,9 @@ const SubAdmin = () => {
     const fetchSubAdminsData = async () => {
       if (user && user.role === 'superadmin') {
         try {
-          const subAdminData = await fetchSubAdmins(); // Call the context function directly
-          setSubAdmins(subAdminData.data); // Assuming subAdminData has a data property
-          setFilteredSubAdmins(subAdminData.data); // Initially show all subAdmins
+          const subAdminData = await fetchSubAdmins();
+          setSubAdmins(subAdminData.data);
+          setFilteredSubAdmins(subAdminData.data);
         } catch (error) {
           console.error('Failed to fetch sub-admins:', error);
           setError(error.message);
@@ -25,7 +25,7 @@ const SubAdmin = () => {
       setLoading(false);
     };
 
-    fetchSubAdminsData(); // Call the function to fetch data
+    fetchSubAdminsData();
   }, [user, fetchSubAdmins]);
 
   useEffect(() => {
@@ -37,6 +37,17 @@ const SubAdmin = () => {
     setFilteredSubAdmins(filteredData);
   }, [searchTerm, subAdmins]);
 
+  const handleDelete = async (subAdminId) => {
+    try {
+      await deleteSubAdmin(subAdminId);
+      setSubAdmins((prev) => prev.filter((subAdmin) => subAdmin._id !== subAdminId));
+      setFilteredSubAdmins((prev) => prev.filter((subAdmin) => subAdmin._id !== subAdminId));
+    } catch (error) {
+      console.error('Error deleting sub-admin:', error);
+      setError('Failed to delete sub-admin.');
+    }
+  };
+
   if (loading) return <div className="text-center text-xl text-gray-500">Loading...</div>;
   if (error) return <div className="text-center text-xl text-red-500">Error: {error}</div>;
 
@@ -46,7 +57,7 @@ const SubAdmin = () => {
 
       {/* Search Bar */}
       <div className="flex justify-center mb-6">
-        <div className="relative w-full ">
+        <div className="relative w-full">
           <input
             type="text"
             placeholder="Search by ID or Email"
@@ -87,6 +98,13 @@ const SubAdmin = () => {
             <p className="text-sm text-gray-700">
               <span className="font-semibold">Created By:</span> {subAdmin.createdBy}
             </p>
+            <button
+              onClick={() => handleDelete(subAdmin._id)}
+              className="mt-4 text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition duration-300"
+            >
+              <FaTrash className="inline mr-2" />
+              Delete
+            </button>
           </div>
         ))}
       </div>
@@ -103,7 +121,7 @@ const SubAdmin = () => {
                 <th className="px-6 py-3 text-sm font-semibold text-left uppercase tracking-wider">Status</th>
                 <th className="px-6 py-3 text-sm font-semibold text-left uppercase tracking-wider">Created At</th>
                 <th className="px-6 py-3 text-sm font-semibold text-left uppercase tracking-wider">Created By</th>
-                <th className="px-6 py-3 text-sm font-semibold text-left uppercase tracking-wider">Admin ID</th>
+                <th className="px-6 py-3 text-sm font-semibold text-left uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="bg-white divide-y divide-gray-300">
@@ -120,7 +138,15 @@ const SubAdmin = () => {
                     {new Date(subAdmin.createdAt).toLocaleString()}
                   </td>
                   <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{subAdmin.createdBy}</td>
-                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">{subAdmin._id}</td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    <button
+                      onClick={() => handleDelete(subAdmin._id)}
+                      className="text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-lg transition duration-300"
+                    >
+                      <FaTrash className="inline mr-2" />
+                      Delete
+                    </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
