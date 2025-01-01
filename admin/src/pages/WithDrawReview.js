@@ -9,6 +9,7 @@ const WithDrawReview = () => {
   const [searchQuery, setSearchQuery] = useState(""); // State for search query
   const [filter, setFilter] = useState("All"); // State for filter
   const { user } = useContext(AuthContext); // Get user context
+  const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
     const fetchWithdrawalRequests = async () => {
@@ -81,7 +82,27 @@ const WithDrawReview = () => {
       );
       closeModal();
     } catch (error) {
-      console.error("Error updating status:", error);
+      // Log detailed error information
+      if (error.response) {
+        console.error("Error updating status:");
+        console.error("Status Code:", error.response.status);
+        console.error("Error Message:", error.response.data?.message || "No message provided");
+        console.error("Full Error Response:", error.response.data);
+        setErrorMessage(error.response.data?.message || "An error occurred");
+    
+        // Clear the error message after 3 seconds
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+      } else {
+        console.error("Error updating status:", error.message);
+        setErrorMessage("An error occurred while updating status.");
+    
+        // Clear the error message after 3 seconds
+        setTimeout(() => {
+          setErrorMessage("");
+        }, 3000);
+      }
     }
   };
 
@@ -271,6 +292,9 @@ const WithDrawReview = () => {
                 <strong className="text-gray-600">Requested At:</strong>
                 {new Date(selectedRequest.requestedAt).toLocaleString()}
               </p>
+              {errorMessage && (
+                <p className="text-red-500">{errorMessage}</p>
+              )}
             </div>
             <div className="flex justify-between mt-4">
               {selectedRequest.status === "Pending" && ( // Only show buttons if the request is pending
