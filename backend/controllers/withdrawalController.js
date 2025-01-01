@@ -141,7 +141,7 @@ const updateWithdrawalRequestsBySubAdmin = async (req, res) => {
     }
 
     // Step 3: If the request is approved, deduct the balance
-    if (status === "approved") {
+    if (status === "Approved") {
       const withdrawalAmount = withdrawalRequest.amount;
       
       if (user.balance < withdrawalAmount) {
