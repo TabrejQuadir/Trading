@@ -1,6 +1,7 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import axios from "axios";
 import BankAccountContext from "../context/BankAccountContext";
+import AuthContext from "../context/AuthContext";
 
 const WithdrawalPage = () => {
   const { accounts } = useContext(BankAccountContext);
@@ -10,6 +11,19 @@ const WithdrawalPage = () => {
   const [message, setMessage] = useState("");
   const [error, setError] = useState("");
   const [accountDetails, setAccountDetails] = useState(null);
+  const { user } = useContext(AuthContext);
+
+  console.log('user:', user);
+
+  // Set default currency based on user country
+  useEffect(() => {
+    const currencyOptions = {
+      India: "INR",
+      Pakistan: "PKR",
+      Russia: "RUB",
+    };
+    setCurrency(currencyOptions[user.country] || "");
+  }, [user.country]);
 
   const handleAccountChange = (e) => {
     const selected = accounts.find((account) => account._id === e.target.value);
@@ -128,9 +142,9 @@ const WithdrawalPage = () => {
                   className="w-full p-3 rounded-md border border-gray-300 bg-gray-50 focus:ring-2 focus:ring-blue-300 focus:outline-none"
                 >
                   <option value="">Select currency</option>
-                  <option value="INR">INR</option>
-                  <option value="PKR">PKR</option>
-                  <option value="RUB">RUB</option>
+                  {user.country === "India" && <option value="INR">INR</option>}
+                  {user.country === "Pakistan" && <option value="PKR">PKR</option>}
+                  {user.country === "Russia" && <option value="RUB">RUB</option>}
                 </select>
               </div>
 
